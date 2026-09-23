@@ -1,0 +1,73 @@
+APDP NEWS PRO — FINAL SETUP GUIDE (project: apdp-news-90907)
+==========================================================
+
+✅ पहले से आपकी फ़ाइलों में लगा हुआ है (कुछ करने की ज़रूरत नहीं):
+   - Web app config (apiKey, appId आदि)
+   - VAPID key (push notifications)
+   - आपका लोगो और app icons
+
+📌 ध्यान दें: पुराना project (apdp-news-ff2eb) अब इस्तेमाल नहीं होगा।
+   Firebase console में उसे Delete कर दें तो भ्रम न हो:
+   Project settings → नीचे "Delete project"
+
+★ बचा हुआ सिर्फ़ 1 काम: Realtime Database बनाना
+
+स्टेप 1 — Realtime Database बनाएं (2 मिनट)
+1. console.firebase.google.com खोलें → project "apdp-news-90907" चुनें
+   (ऊपर देखें कि सही project खुला है!)
+2. बाईं menu → Build → Realtime Database → "Create Database"
+3. "Start in test mode" → Next → Location: asia-southeast1 (Singapore) → Done
+4. ऊपर दिख रहा URL नोट करें, जैसे:
+   https://apdp-news-90907-default-rtdb.asia-southeast1.firebasedatabase.app
+5. Rules tab → ये paste करें → Publish:
+{
+  "rules": {
+    "posts": { ".read": true, "$pid": { ".write": true } },
+    "likes": { ".read": true, ".write": true },
+    "tokens": { ".read": true, ".write": true },
+    "settings": { ".read": true, ".write": true },
+    "admins": { ".read": true, ".write": true }
+  }
+}
+6. ★ वही database URL मुझे भेज दें (या Realtime Database page का screenshot)
+   — मैं उसे फ़ाइल में लगा दूंगा
+
+स्टेप 2 — GitHub पर upload करें
+1. github.com → Sign up → नई repository: apdp-news (Public)
+2. "uploading an existing file" → ये 5 फ़ाइलें upload करें:
+   index.html, firebase-messaging-sw.js, manifest.webmanifest,
+   icon-192.png, icon-512.png
+3. Commit changes
+
+स्टेप 3 — Hosting चालू करें
+1. Settings → Pages → Source: Deploy from a branch → main → Save
+2. 2-3 मिनट बाद app LIVE: https://aapka-username.github.io/apdp-news/
+
+स्टेप 4 — पहली बार चलाएं
+1. लिंक खोलें → "एडमिन" tab → नया अकाउंट बनाएं
+   (पहला अकाउंट अपने आप एडमिन बनता है — email + password याद रखें!)
+2. ब्राउज़र menu → "Add to Home Screen" → APDP NEWS का icon आ जाएगा
+
+स्टेप 5 — खबर अपलोड करें
+- एडमिन tab → शीर्षक, विवरण, फोटो/वीडियो → "प्रकाशित करें"
+- दुनिया भर के दर्शकों को तुरंत दिखेगा!
+
+स्टेप 6 — Push notification भेजें (ब्रेकिंग न्यूज़)
+   (Google ने पुरानी Legacy API बंद कर दी है, इसलिए ऐसे भेजें — free)
+1. Firebase console → बाईं menu सबसे नीचे "Messaging" (घंटी icon)
+   → "Create your first campaign" / "New campaign" → Notification
+2. Notification title: खबर का शीर्षक
+   Notification text: 2 लाइन में खबर
+3. "Send test message" से पहले अपने phone पर check करें
+4. फिर "Publish" — सभी app users को notification जाएगा! 🔴
+
+YouTube सेक्शन (वैकल्पिक):
+- YouTube Data API key: console.cloud.google.com → APIs & Services
+  → Library → "YouTube Data API v3" → Enable → Credentials → Create API key
+- अपने channel → Videos → "Play all" → URL में list=XXXX (वही ID)
+- दोनों एडमिन → सेटिंग्स में डालें
+
+AdSense (बाद में):
+- adsense.google.com से approve → कोड एडमिन सेटिंग्स में paste करें
+
+कोई भी step अटके तो screenshot भेजें!
